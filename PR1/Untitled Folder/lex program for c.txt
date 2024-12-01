@@ -1,0 +1,146 @@
+
+/*--------------------------------------------------------------------
+Experiment NO: 1 
+PROGRAM STATEMENT:LEX SPECIFICETION FOR C-PROGRAM
+---------------------------------------------------------------------*/
+//lexc.l
+
+%{
+    #include<math.h>
+    FILE *fp;
+%}
+
+digit  [0-9]+
+word   [a-zA-Z]+
+header [\t ]*"#include<"[a-z]+".h>"[\t]*\n
+inbuilt [\t]*"printf(".*")"|[\t]*"scanf(".*")"|[\t]*"clrscr()"|[\t]*"getch()"|[\t]*"exit(.+)"\n
+comment   [\t ]*"/*".*"*/"[\t]*\n
+function  [\t]*[a-zA-Z]+"(".*")"[\t]*\n
+datatype  [\t ]*"int"|[\t ]*"char"|[\t ]*"float"
+operator  "+"|"-"|"*"|"/"
+terminator ";"
+bracket1   [\t]*"{"[\t]*
+bracket2   [\t]*"}"[\t]*
+loop       [\t ]*"if(".*")"|[\t ]*"else"|[\t ]*"for"|[\t ]*"while"|[\t ]*"do"
+relational [\t]*"<"|">"|"<="|">="|"=="|"="|"!="|"%"
+logical    [\t]*"&&"|"||"
+word   [a-zA-Z]+
+
+%%
+
+{digit}        {printf("\n numbers are        :: %s",yytext);}
+{header}       {printf("\n header files are   :: %s",yytext);}
+{inbuilt}      {printf("\n functions are      :: %s",yytext);}
+{comment}      {printf("\n comment            :: %s",yytext);}
+{function}     {printf("\n user function      :: %s",yytext);}
+{datatype}     {printf("\n datatypes are      :: %s",yytext);}
+{operator}     {printf("\n operator are       :: %s",yytext);}
+{terminator}   {printf("\n terminate statement:: %s",yytext);}
+{bracket1}     {printf("\n opening curly brace:: %s",yytext);}
+{bracket2}     {printf("\n closing curly brace:: %s",yytext);}
+{relational}   {printf("\n realtional operator:: %s",yytext);}
+{loop}         {printf("\n loop are           :: %s",yytext);}
+{logical}      {printf("\n logical operator   :: %s",yytext);}
+{word}         {printf("\n variables are      :: %s",yytext);}
+
+%%
+
+
+
+int main(int argc,char *argv[])
+{
+
+
+   fp=fopen(argv[1],"r");
+
+   if(fp!=NULL)
+   {
+      yyin=fp;
+      yylex();
+   }
+   return(0);
+}
+
+-----------------------------------------------
+//cpro.c
+
+
+
+#include<stdio.h>
+#include<conio.h>
+
+void main()
+{
+   clrscr()
+   int no;
+   printf("\nEnter the number::");
+   scanf("%d",&no);
+
+   if(no%2==0)
+   {
+      printf("\nEntered Number is EVEN");
+   }
+   else
+   {
+
+      printf("\nEntered Number is ODD");
+   }
+   getch();
+}
+
+
+------------------------------------------
+
+"lexc.l" 58L, 1621C written
+[beb26@localhost ~]$ lex lexc.l
+[beb26@localhost ~]$ cc lex.yy.c -ll
+[beb26@localhost ~]$ ./a.out cpro.c
+
+
+
+ header files are   :: #include<stdio.h>
+
+ header files are   :: #include<conio.h>
+
+
+ variables are      :: void
+ user function      :: main()
+
+ opening curly brace:: {
+
+ user function      :: clrscr()
+
+ datatypes are      ::    int
+ variables are      :: no
+ terminate statement:: ;
+
+ functions are      :: printf("\nEnter the number::")
+ terminate statement:: ;
+
+ functions are      :: scanf("%d",&no)
+ terminate statement:: ;
+
+
+ loop are           ::    if(no%2==0)
+
+ opening curly brace:: {
+
+ functions are      :: printf("\nEntered Number is EVEN")
+ terminate statement:: ;
+
+ closing curly brace:: }
+
+ loop are           ::    else
+
+ opening curly brace:: {
+
+
+ functions are      :: printf("\nEntered Number is ODD")
+ terminate statement:: ;
+
+ closing curly brace:: }
+
+ functions are      :: getch()
+ terminate statement:: ;
+
+ closing curly brace:: }
