@@ -2,14 +2,18 @@
 
 
 ## 1)gedit programe1.l
+lex program1.l
 cc lex.yy.c -ll <br>
 ./a.out input.text<br>
 
 ## 2) gedit programe2.l
+lex program2.l
 cc lex.yy.c -ll<br>
 ./a.out input.text<br>
 
-## 3) lex calculator.l
+## 3) gedit calculator.l
+## gedit calculator.y
+lex calculator.l
 yacc -d calculator.y<br>
 cc lex.yy.c y.tab.c -ll -ly<br>
 ./a.out<br>
