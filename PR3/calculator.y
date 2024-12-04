@@ -22,7 +22,7 @@ ArithmeticExpression: E{
          return 0;
   
         };
-R:E'+'E {$$=$1+$3;} 
+E:E'+'E {$$=$1+$3;} 
 
 		 |E'-'E {$$=$1-$3;} 
 
